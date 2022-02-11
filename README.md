@@ -30,6 +30,7 @@ We can compile the contract and assemble some transactions either in Mainnet or 
 - Create actual transactions
 - Wait for the miners to mine your transactions
 - If you want to repeat the same thing after a while, reproducibility may be an issue
+
 A better approach is to write some simple code to test the contract off-chain without it ever going on the blockchain!
 
 In this tutorial we will write two methods to test two scenarios.
