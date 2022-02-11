@@ -36,7 +36,7 @@ A better approach is to write some simple code to test the contract off-chain wi
 In this tutorial we will write two methods to test two scenarios.
 
 # First Scenario: Swap
-Let's the main scenario which swapping Tether for SigUSD. Let's say the user wants to swap his 100 Tethers for 100 SigUSD. First let's make some dummy boxes:
+Let's test the main scenario which swapping Tether for SigUSD. Let's say the user wants to swap his 100 Tethers for 100 SigUSD. First let's make some dummy boxes:
 
 ### Swap Box
 ```scala
