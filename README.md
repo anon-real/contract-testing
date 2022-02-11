@@ -2,7 +2,7 @@
 This repo contains a simple swap example to show how to test Ergo contracts off-chain using [Ergo Appkit](https://github.com/ergoplatform/ergo-appkit).
 
 # The contract
-The contract is does a simple swap between two tokens. For the sake of this example, let's say one of tokens is wrapped Tether and the other is SigUSD!
+The contract does a simple swap between two tokens. For the sake of this example, let's say one of tokens is wrapped Tether and the other is SigUSD!
 Here is the contract:
 ```scala
 {
