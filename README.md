@@ -2,7 +2,7 @@
 This repo contains a simple swap example to show how to test Ergo contracts off-chain using [Ergo Appkit](https://github.com/ergoplatform/ergo-appkit).
 
 # The contract
-The contract does a simple swap between two tokens. For the sake of this example, let's say one of tokens is wrapped Tether and the other is SigUSD!
+The contract does a simple swap between two tokens. For the sake of this example, let's say one of the tokens is wrapped Tether and the other is SigUSD!
 Here is the contract:
 ```scala
 {
@@ -22,7 +22,7 @@ Here is the contract:
 ```
 
 The contract allows swaps in both ways as long as:
-- The sum of tokens and type of them remain the same in the first output
+- The sum of the tokens and type of them remain the same in the first output
 - First output's contract is the same as the swap box
 
 We can compile the contract and assemble some transactions either in Mainnet or Testnet to test its functionalities and trying to find bugs in it. However, that is time consiming since it requires you to:
@@ -66,7 +66,7 @@ Here is a break down of the above code:
       .tokens(newTether, newSigusd)
       .build(
 ```
-This box is same as the original one for the most part. The difference is the amount of Tether and SigUSD that it contains. Notice that the sum of tokens has remained the same. This suggests that the user will swap 1k Tether for 1k SigUSD.
+This box is same as the original one for the most part. The difference is the amount of Tether and SigUSD that it contains. Notice that the sum of the tokens has remained the same. This suggests that the user will swap 1k Tether for 1k SigUSD.
 
 ### User Funds Box
 ```scala
