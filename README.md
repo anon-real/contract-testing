@@ -25,8 +25,10 @@ The contract allows swaps in both ways as long as:
 - The sum of the tokens and type of them remain the same in the first output
 - First output's contract is the same as the swap box
 
-We can compile the contract and assemble some transactions either in Mainnet or Testnet to test its functionalities and trying to find bugs in it. However, that is time consiming since it requires you to:
+We can compile the contract and assemble some transactions either in Mainnet or Testnet to test its functionalities and trying to find bugs in it. However, that is not very practical since it requires you to:
 - Create actual boxes
+- If you need tokens, you will have to issue actual ones
+- You may need lots of ERGs to test edge cases which may not be possible on-chain
 - Create actual transactions
 - Wait for the miners to mine your transactions
 - If you want to repeat the same thing after a while, reproducibility may be an issue
@@ -36,7 +38,7 @@ A better approach is to write some simple code to test the contract off-chain wi
 In this tutorial we will write two methods to test two scenarios.
 
 # First Scenario: Swap
-Let's test the main scenario which swapping Tether for SigUSD. Let's say the user wants to swap his 100 Tethers for 100 SigUSD. First let's make some dummy boxes:
+Let's test the main scenario which is swapping Tether for SigUSD. Let's say the user wants to swap his 100 Tether for 100 SigUSD. First let's make some dummy boxes:
 
 ### Swap Box
 ```scala
@@ -53,7 +55,7 @@ val tb = ctx.newTxBuilder()
 Here is a break down of the above code:
 - Creating a transaction builder object called **tb**
 - Creating 10k test Tether and 20k test SigUSD tokens
-- Createing a swap box with 2 ERGs and the two created tokens -- notice that we convert this box to input using `convertToInputWith` with a dummy transaction ID.
+- Createing a swap box with 2 ERGs and the two created tokens -- notice that we convert this box to input using `convertToInputWith` with a dummy transaction ID
 
 ### Output Swap Box
 ```scala
@@ -67,7 +69,7 @@ Here is a break down of the above code:
       .tokens(newTether, newSigusd)
       .build(
 ```
-This box is same as the original one for the most part. The difference is the amount of Tether and SigUSD that it contains. Notice that the sum of the tokens has remained the same. This suggests that the user will swap 1k Tether for 1k SigUSD.
+This box is the same as the original one for the most part. The difference is the amount of Tether and SigUSD that it contains. Notice that the sum of the tokens has remained the same. This suggests that the user will swap 1k Tether for 1k SigUSD.
 
 ### User Funds Box
 ```scala
@@ -78,7 +80,7 @@ This box is same as the original one for the most part. The difference is the am
       .build()
       .convertToInputWith("ce552663312afc2379a91f803c93e2b10b424f176fbc930055c10def2fd88a5d", 0)
 ```
-This is the user's box containing his funds. Here he has 1k Tether which he wish to swap for SigUSD. For simplicity the contract of this box is `sigmaProp(true)`.
+This is the user's box containing his funds. Here he has 1k Tether which he wishes to swap for SigUSD. For simplicity the contract of this box is `sigmaProp(true)`.
 
 ### User Output Box
 ```scala
@@ -88,7 +90,7 @@ This is the user's box containing his funds. Here he has 1k Tether which he wish
       .tokens(new ErgoToken("f9e5ce5aa0d95f5d54a7bc89c46730d9662397067250aa18a0039631c0f5b809", 1000))
       .build()
 ````
-This is the user's output box. Notice that there is 1k SigUSD in it which suggests that 1k Tether is swapped with 1k SigUSD.
+This is the user's output box. Notice that there is 1k SigUSD in it which suggests that his 1k Tether is swapped with 1k SigUSD.
 
 ## Signing the Transaction
 ``` scala
@@ -99,6 +101,7 @@ This is the user's output box. Notice that there is 1k SigUSD in it which sugges
       .build()
     val signed = prover.sign(tx)
 ```
+If all conditions of the swap contract is satisfied, this transaction should be signed successfully. If you run the code, you will see the signed transaction as a json. So we were able to test our main scenario off-chain!
 
 # Second Scenario: Stealing ERGs
 This contract has many problems. The most noticible one is that it is not preserving the ERG amount of the swap box. So the user can steal the swap box's ERGs easily. This scenario is very similar to the previous one for crating boxes and signing the tx. So we don't go through the details. Here is the piece of code that tires to steal the swap box's ERGs:
